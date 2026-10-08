@@ -12,7 +12,7 @@ class VkBenchmarkTask
     private const string ConfigRelativePath = @"b1\Saved\Config\Windows\GameUserSettings.ini";
     private const string ExeRelativePath = @"b1_benchmark.exe";
 
-    // WinAPI для эмуляции нажатий клавиш
+    
     [DllImport("user32.dll")]
     private static extern bool SetForegroundWindow(IntPtr hWnd);
 
@@ -40,7 +40,7 @@ class VkBenchmarkTask
         Console.WriteLine($"  GPU: {GetGpuInfo()}");
         Console.WriteLine();
 
-        // === CPU-ТЕСТ ===
+      
         Console.WriteLine("[1/2] Настройка и запуск CPU-теста...");
         ApplySettings(fullConfigPath, GetCpuTestSettings());
         RunBenchmark(fullExePath);
@@ -50,7 +50,7 @@ class VkBenchmarkTask
 
         Thread.Sleep(3000);
 
-        // === GPU-ТЕСТ ===
+      
         Console.WriteLine("[2/2] Настройка и запуск GPU-теста...");
         ApplySettings(fullConfigPath, GetGpuTestSettings());
         RunBenchmark(fullExePath);
@@ -58,7 +58,7 @@ class VkBenchmarkTask
         Console.WriteLine($"  ✅ Результат GPU-теста: {gpuResult}");
         Console.WriteLine();
 
-        // === ИТОГОВЫЙ ОТЧЁТ ===
+       
         Console.WriteLine("================================================");
         Console.WriteLine("ИТОГОВЫЙ ОТЧЁТ");
         Console.WriteLine("================================================");
@@ -151,11 +151,11 @@ class VkBenchmarkTask
         using var process = Process.Start(psi);
         if (process == null) { Console.WriteLine("  ❌ Не удалось запустить."); return; }
 
-        // Ждём загрузки меню (подбери время под свою систему — от 10 до 30 секунд)
+       
         Console.WriteLine("  ⏳ Ожидание загрузки меню (20 секунд)...");
         Thread.Sleep(20000);
 
-        // Пробуем активировать окно и нажать Enter
+        
         Console.WriteLine("  ⌨️ Отправка нажатия Enter для запуска теста...");
         process.Refresh();
         IntPtr handle = process.MainWindowHandle;
@@ -168,11 +168,11 @@ class VkBenchmarkTask
             keybd_event(VK_RETURN, 0, KEYEVENTF_KEYUP, UIntPtr.Zero);
         }
 
-        // Ждём завершения теста (примерно 3 минуты, подбери под свою систему)
+        
         Console.WriteLine("  ⏳ Ожидание завершения теста (3 минуты)...");
         Thread.Sleep(180000);
 
-        // Закрываем бенчмарк, если он ещё открыт
+        
         try
         {
             if (!process.HasExited)
